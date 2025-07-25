@@ -1,0 +1,22 @@
+{
+  "network": "somnia-testnet",
+  "deployer": "0x34C775FB2fe2b8383B5659B3f7Fc1E721Ca04A3a",
+  "deploymentDate": "2025-07-23T19:00:00.000Z",
+  "contracts": {
+    "GameManager": "0x4A4EBc7bfb813069e5495fB36B53cc937A31b441",
+    "PlayerProfile": "0x9f853686c5162A8E210dc9D13a8114f095Fc17F3",
+    "LightningArcadeRewards": "0xbF1B2ca2CC17Bd98679D584575d549c62B3214eb",
+    "Tournament": "0x88deaBcDDdAD618aBd67eCBdf490f68646c088aD"
+  },
+  "sampleData": {
+    "gameIds": [1, 2],
+    "tournamentId": 1,
+    "pioneerBadgeTokenId": 1
+  },
+  "gasUsed": {
+    "GameManager": "N/A",
+    "PlayerProfile": "N/A",
+    "LightningArcadeRewards": "N/A",
+    "Tournament": "N/A"
+  }
+} 
