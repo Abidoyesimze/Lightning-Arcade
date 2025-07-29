@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { AppKitButton } from '@reown/appkit/react'; // Import AppKitButton
 import {
   HomeIcon,
   PlayIcon,
@@ -10,7 +11,7 @@ import {
   Bars3Icon,
   XMarkIcon,
   BoltIcon,
-  WalletIcon
+  // WalletIcon,
 } from '@heroicons/react/24/outline';
 
 const Navbar = () => {
@@ -33,7 +34,6 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-slate-700/50">
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-16">
-            
             {/* Logo - Far Left */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center space-x-3 group">
@@ -64,14 +64,12 @@ const Navbar = () => {
                   >
                     <Icon className="w-4 h-4" />
                     <span>{item.name}</span>
-                    
-                    {/* Active indicator */}
                     {isActive(item.href) && (
                       <motion.div
                         layoutId="activeTab"
                         className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-400 rounded-full"
                         initial={false}
-                        transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
+                        transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}
                       />
                     )}
                   </Link>
@@ -81,21 +79,11 @@ const Navbar = () => {
 
             {/* Right side - Network & Wallet - Far Right */}
             <div className="hidden md:flex items-center space-x-4">
-              {/* Network Status */}
               <div className="flex items-center space-x-2 text-sm text-slate-400">
                 <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                 <span>Somnia Testnet</span>
               </div>
-              
-              {/* Connect Wallet Button */}
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2"
-              >
-                <WalletIcon className="w-4 h-4" />
-                <span>Connect Wallet</span>
-              </motion.button>
+              <AppKitButton /> {/* Use AppKitButton */}
             </div>
 
             {/* Mobile - Spacer and Menu Button */}
@@ -105,11 +93,7 @@ const Navbar = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800/50 transition-colors duration-200"
               >
-                {isOpen ? (
-                  <XMarkIcon className="w-6 h-6" />
-                ) : (
-                  <Bars3Icon className="w-6 h-6" />
-                )}
+                {isOpen ? <XMarkIcon className="w-6 h-6" /> : <Bars3Icon className="w-6 h-6" />}
               </button>
             </div>
           </div>
@@ -128,16 +112,14 @@ const Navbar = () => {
               className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
               onClick={() => setIsOpen(false)}
             />
-            
             {/* Mobile Menu */}
             <motion.div
               initial={{ opacity: 0, x: '100%' }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: '100%' }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               className="fixed top-0 right-0 z-50 w-80 h-full bg-slate-900 border-l border-slate-700/50 md:hidden"
             >
-              {/* Mobile Header */}
               <div className="flex items-center justify-between p-4 border-b border-slate-700/50">
                 <span className="text-lg font-semibold text-white">Menu</span>
                 <button
@@ -147,8 +129,6 @@ const Navbar = () => {
                   <XMarkIcon className="w-5 h-5" />
                 </button>
               </div>
-
-              {/* Mobile Navigation */}
               <div className="p-4 space-y-2">
                 {navigation.map((item) => {
                   const Icon = item.icon;
@@ -169,23 +149,12 @@ const Navbar = () => {
                   );
                 })}
               </div>
-
-              {/* Mobile Footer */}
               <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-700/50 space-y-4">
-                {/* Network Status */}
                 <div className="flex items-center justify-center space-x-2 text-sm text-slate-400">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                   <span>Somnia Testnet</span>
                 </div>
-                
-                {/* Connect Wallet Button */}
-                <button 
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-3 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <WalletIcon className="w-5 h-5" />
-                  <span>Connect Wallet</span>
-                </button>
+                <AppKitButton /> {/* Replace custom button with AppKitButton */}
               </div>
             </motion.div>
           </>
