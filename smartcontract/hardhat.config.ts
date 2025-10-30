@@ -34,7 +34,7 @@ const config: HardhatUserConfig = {
     },
     baseSepolia: {
       url: "https://sepolia.base.org",
-      accounts: [configVariable("BASE_SEPOLIA_PRIVATE_KEY")],
+      accounts: [configVariable("PRIVATE_KEY")],
       chainId: 84532,
       type: "http",
       chainType: "l1",
