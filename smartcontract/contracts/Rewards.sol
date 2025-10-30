@@ -1,11 +1,11 @@
- // SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
@@ -124,7 +124,7 @@ contract LightningArcadeRewards is ERC721, ERC721URIStorage, ERC721Enumerable, O
 
     // Modifiers
     modifier validTokenId(uint256 tokenId) {
-        require(_exists(tokenId), "Token does not exist");
+        require(_ownerOf(tokenId) != address(0), "Token does not exist");
         _;
     }
 
@@ -133,7 +133,7 @@ contract LightningArcadeRewards is ERC721, ERC721URIStorage, ERC721Enumerable, O
         _;
     }
 
-    constructor() ERC721("Lightning Arcade Rewards", "LAR") {}
+    constructor() ERC721("Lightning Arcade Rewards", "LAR") Ownable(msg.sender) {}
 
     function mintAchievementBadge(
         address recipient,
@@ -384,23 +384,27 @@ contract LightningArcadeRewards is ERC721, ERC721URIStorage, ERC721Enumerable, O
         return "#6B7280";
     }
 
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId,
-        uint256 batchSize
-    ) internal override(ERC721, ERC721Enumerable) {
-        super._beforeTokenTransfer(from, to, tokenId, batchSize);
-
-        if (from != address(0)) {
+    function _update(address to, uint256 tokenId, address auth)
+        internal
+        override(ERC721, ERC721Enumerable)
+        returns (address)
+    {
+        address from = _ownerOf(tokenId);
+        
+        if (from != address(0) && from != to) {
             if (achievementBadges[tokenId].tokenId != 0) {
                 require(achievementBadges[tokenId].isTransferable, "Achievement badge not transferable");
             }
         }
+        
+        return super._update(to, tokenId, auth);
     }
 
-    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
-        super._burn(tokenId);
+    function _increaseBalance(address account, uint128 value)
+        internal
+        override(ERC721, ERC721Enumerable)
+    {
+        super._increaseBalance(account, value);
     }
 
     function supportsInterface(bytes4 interfaceId)
