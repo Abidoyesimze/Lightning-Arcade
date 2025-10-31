@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
@@ -56,6 +56,9 @@ contract GameManager is ReentrancyGuard, Ownable {
     event ScoreUpdate(uint256 indexed gameId, address indexed player, uint256 score, uint256 timestamp, uint256 rank);
     event GameFinished(uint256 indexed gameId, address indexed winner, uint256 winningScore, uint256 totalPlayers, uint256 prizeAmount);
     event LeaderboardUpdate(uint256 indexed gameId, address[] topPlayers, uint256[] scores);
+
+    // Add constructor to pass initial owner to Ownable
+    constructor() Ownable(msg.sender) {}
 
     modifier gameExists(uint256 gameId) {
         require(games[gameId].gameId != 0, "Game does not exist");
@@ -332,4 +335,4 @@ contract GameManager is ReentrancyGuard, Ownable {
     function getTotalGames() external view returns (uint256) {
         return _gameIdCounter;
     }
-} 
+}

@@ -43,6 +43,9 @@ contract Tournament is Ownable {
     event TournamentStarted(uint256 indexed tournamentId);
     event TournamentFinished(uint256 indexed tournamentId, address winner, uint256 prize);
 
+    // Add constructor to pass initial owner to Ownable
+    constructor() Ownable(msg.sender) {}
+
     function createTournament(
         TournamentType tournamentType,
         string memory name,
@@ -124,4 +127,4 @@ contract Tournament is Ownable {
     function getPlayerTournaments(address player) external view returns (uint256[] memory) {
         return playerTournaments[player];
     }
-} 
+}
